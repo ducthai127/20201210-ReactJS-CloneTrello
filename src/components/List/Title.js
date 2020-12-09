@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { InputBase, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import React, { useState } from "react";
 
 const useStyle = makeStyles((theme) => ({
   editableTitleContainer: {
@@ -10,8 +10,12 @@ const useStyle = makeStyles((theme) => ({
   },
   editableTitle: {
     flexGrow: 1,
+    fontSize: "1.2rem",
+    fontWeight: "bold",
   },
   input: {
+    fontSize: "1.2rem",
+    fontWeight: "bold",
     margin: theme.spacing(1),
     "&:focus": {
       background: "#ddd",
