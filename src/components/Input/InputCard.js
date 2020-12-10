@@ -24,29 +24,30 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-export default function InputCard({ setOpen, listId }) {
+export default function InputCard({ setOpen, listId, type }) {
   const classes = useStyle();
-  const { addMoreCard } = useContext(storeApi);
-  const [cardTitle, setCardTitle] = useState("");
+  const { addMoreCard, addMoreList } = useContext(storeApi);
+  const [title, setTitle] = useState("");
 
   const handleOnChange = (e) => {
-    setCardTitle(e.target.value);
-  };
-
-  const handleBlur = () => {
-    setOpen(false);
-    // setCardTitle("");
+    setTitle(e.target.value);
   };
 
   const handleClear = () => {
     setOpen(false);
-    setCardTitle("");
+    setTitle("");
   };
 
   const handleBtnConfirm = () => {
-    addMoreCard(cardTitle, listId);
-    setOpen(false);
-    setCardTitle("");
+    if (type === "card") {
+      addMoreCard(title, listId);
+      setOpen(false);
+      setTitle("");
+    } else {
+      addMoreList(title);
+      setOpen(false);
+      setTitle("");
+    }
   };
 
   return (
@@ -56,19 +57,23 @@ export default function InputCard({ setOpen, listId }) {
           <InputBase
             onChange={handleOnChange}
             multiline
-            onBlur={handleBlur}
+            onBlur={() => setOpen(false)}
             fullWidth
             inputProps={{
               className: classes.input,
             }}
-            value={cardTitle}
-            placeholder="Enter a title of this card..."
+            value={title}
+            placeholder={
+              type === "card"
+                ? "Enter a title of this card..."
+                : "Enter list title..."
+            }
           />
         </Paper>
       </div>
       <div className={classes.confirm}>
         <Button className={classes.btnConfirm} onClick={handleBtnConfirm}>
-          Add Card
+          {type === "card" ? "Add Card" : "Add List"}
         </Button>
         <IconButton onClick={handleClear}>
           <ClearIcon />
